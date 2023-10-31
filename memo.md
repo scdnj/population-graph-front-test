@@ -1,4 +1,8 @@
-typesript-eslintをcjsファイルに適用しようとして失敗したりtsconfigが無いと言われたりvite型定義ファイルがeslintに引っかかったりしていた。しれっと.eslintrcがjsじゃなくてcjsになってるけどなんでこうしないといけないかの理由は忘れてしまった。
+やりたいと思っていたけどやれていなかったことをやってみた。
+
+普段はvscodeで保存時にフォーマットするようにしてるんだけど非vscode開発を想定してみた。
+
+huskyはユニットテストの実行をプッシュ前にやる用途でしか使ってなかったけどやっぱり便利。
 
 ## 開発環境やりたいこと
 
@@ -6,8 +10,8 @@ o vue
 x nuxt
 o eslint
 o prettier
-x eslint-config-prettier
-x husky + lint-staged
+o eslint-config-prettier
+o husky + lint-staged
 x jest
 x storybook
 x hygen
