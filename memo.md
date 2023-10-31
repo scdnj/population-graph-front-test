@@ -1,8 +1,6 @@
-やりたいと思っていたけどやれていなかったことをやってみた。
+Storybook好き。
 
-普段はvscodeで保存時にフォーマットするようにしてるんだけど非vscode開発を想定してみた。
-
-huskyはユニットテストの実行をプッシュ前にやる用途でしか使ってなかったけどやっぱり便利。
+中規模程度の開発だったら基本コンポーネントテストなしでこれだけで良いと思っている。
 
 ## 開発環境やりたいこと
 
@@ -13,7 +11,7 @@ o prettier
 o eslint-config-prettier
 o husky + lint-staged
 x jest
-x storybook
+o storybook
 x hygen
 x tailwindcss
 x コンポーネントのjestでのテスト

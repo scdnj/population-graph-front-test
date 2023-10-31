@@ -3,13 +3,7 @@ module.exports = {
     browser: true,
     es2021: true,
   },
-  extends: [
-    'standard-with-typescript',
-    'plugin:vue/vue3-recommended',
-    'eslint:recommended',
-    '@vue/typescript/recommended',
-    'prettier',
-  ],
+  extends: ['standard-with-typescript', 'plugin:vue/vue3-recommended', 'eslint:recommended', '@vue/typescript/recommended', 'prettier', 'plugin:storybook/recommended'],
   overrides: [
     {
       env: {
