@@ -214,7 +214,7 @@
   resolved "https://registry.yarnpkg.com/@types/semver/-/semver-7.5.4.tgz#0a41252ad431c473158b22f9bfb9a63df7541cff"
   integrity sha512-MMzuxN3GdFwskAnb6fz0orFvhfqi752yjaXylr0Rp4oDg5H0Zn1IuyRhDVvYOwAXoJirx2xuS16I3WjxnAIHiQ==
 
-"@typescript-eslint/eslint-plugin@^6.4.0":
+"@typescript-eslint/eslint-plugin@^6.4.0", "@typescript-eslint/eslint-plugin@^6.7.0":
   version "6.9.1"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/eslint-plugin/-/eslint-plugin-6.9.1.tgz#d8ce497dc0ed42066e195c8ecc40d45c7b1254f4"
   integrity sha512-w0tiiRc9I4S5XSXXrMHOWgHgxbrBn1Ro+PmiYhSg2ZVdxrAJtQgzU5o2m1BfP6UOn7Vxcc6152vFjQfmZR4xEg==
@@ -231,7 +231,7 @@
     semver "^7.5.4"
     ts-api-utils "^1.0.1"
 
-"@typescript-eslint/parser@^6.4.0":
+"@typescript-eslint/parser@^6.4.0", "@typescript-eslint/parser@^6.7.0":
   version "6.9.1"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/parser/-/parser-6.9.1.tgz#4f685f672f8b9580beb38d5fb99d52fc3e34f7a3"
   integrity sha512-C7AK2wn43GSaCUZ9do6Ksgi2g3mwFkMO3Cis96kzmgudoVaKyt62yNzJOktP0HDLb/iO2O0n2lBOzJgr6Q/cyg==
@@ -372,6 +372,15 @@
   dependencies:
     "@vue/compiler-dom" "3.3.7"
     "@vue/shared" "3.3.7"
+
+"@vue/eslint-config-typescript@^12.0.0":
+  version "12.0.0"
+  resolved "https://registry.yarnpkg.com/@vue/eslint-config-typescript/-/eslint-config-typescript-12.0.0.tgz#0ce22d97af5e4155f3f2e7b21a48cfde8a6f3365"
+  integrity sha512-StxLFet2Qe97T8+7L8pGlhYBBr8Eg05LPuTDVopQV6il+SK6qqom59BA/rcFipUef2jD8P2X44Vd8tMFytfvlg==
+  dependencies:
+    "@typescript-eslint/eslint-plugin" "^6.7.0"
+    "@typescript-eslint/parser" "^6.7.0"
+    vue-eslint-parser "^9.3.1"
 
 "@vue/language-core@1.8.22":
   version "1.8.22"
