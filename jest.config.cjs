@@ -1,6 +1,8 @@
 module.exports = {
   roots: ['<rootDir>'],
-  moduleNameMapper: {},
+  moduleNameMapper: {
+    '^.+\\.(css|less)$': '<rootDir>/tests/CSSStub.js',
+  },
   moduleFileExtensions: ['ts', 'js', 'json', 'vue'],
   transform: {
     '^.+\\.(t|j)sx?$': ['@swc/jest'],
