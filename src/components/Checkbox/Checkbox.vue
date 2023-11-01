@@ -11,8 +11,10 @@ const vModel = computed({
 });
 </script>
 <template>
-  <label>
+  <label class="flex items-center text-sm space-x-2">
     <input v-model="vModel" type="checkbox" />
-    {{ label }}
+    <div>
+      {{ label }}
+    </div>
   </label>
 </template>
