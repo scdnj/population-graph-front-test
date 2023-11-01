@@ -1,8 +1,6 @@
+storybookを実行出来なかった。↓のissueと同じバグだったので書いてある通りにpnpmに移行した。
 
-Hygen大好き。テンプレートは昔作ったものを再利用している。
-
-jestを入れたのだから本当はここで常にテストを回しておくべきだった。
-
+https://github.com/storybookjs/storybook/issues/22431
 
 ## 開発環境やりたいこと
 
