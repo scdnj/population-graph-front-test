@@ -1,6 +1,4 @@
-storybookを実行出来なかった。↓のissueと同じバグだったので書いてある通りにpnpmに移行した。
-
-https://github.com/storybookjs/storybook/issues/22431
+ここでようやくjestを実行出来るようになった。順序を正しくやればちゃんと毎コミットテストを走らせられたと思う。失敗。
 
 ## 開発環境やりたいこと
 
@@ -13,8 +11,8 @@ https://github.com/storybookjs/storybook/issues/22431
 - [x] jest
 - [x] storybook
 - [x] hygen
-- [ ] tailwindcss
-- [ ] コンポーネントのjestでのテスト
+- [x] tailwindcss
+- [x] コンポーネントのjestでのテスト
 - [ ] playwright
 - [ ] CI
 - [ ] storybookのi11y関連プラグイン(あったと思う。あった方がいいと思うけど今じゃない気がする)
