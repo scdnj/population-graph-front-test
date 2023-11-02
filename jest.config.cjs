@@ -9,6 +9,7 @@ module.exports = {
     '^.+\\.vue$': '@vue/vue3-jest', // Update to match your installed version
   },
   testMatch: ['**/?(*.)+(spec|test).[jt]s?(x)'],
+  testPathIgnorePatterns : ['<rootDir>/tests/learn'],
   collectCoverageFrom: ['src/**/*.{js,jsx,ts,tsx}'],
   setupFiles: ['<rootDir>/tests/jest.setup.js'],
   testEnvironment: 'jsdom',
