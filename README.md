@@ -27,3 +27,9 @@ https://note.yumemi.co.jp/n/ned7429b59556
 - [ ] CI
 - [ ] storybookのi11y関連プラグイン(あったと思う。あった方がいいと思うけど今じゃない気がする)
 - [ ] VRT(グラフあるしあった方が良いかも？TDDでやったことはないし見た目もfixではないので後でいいかも)
+
+## 注意書き
+vscode+Volarでの開発をする場合、テストファイルとStorybookファイルでvueファイルの型が適切に解釈されないことがあります。
+その場合はvscodeにbuiltinされているtypescript言語機能プラグイン(vscode.typescript-language-features)を切ってください。
+
+参考: https://vuejs.org/guide/typescript/overview.html#volar-takeover-mode
