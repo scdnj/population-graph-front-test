@@ -47,6 +47,27 @@ const options = ref<Options & ChartOptions>({
       );
     },
   },
+  responsive: {
+    rules: [
+      {
+        condition: {
+          maxWidth: 700,
+        },
+        chartOptions: {
+          legend: {
+            layout: 'horizontal',
+            align: 'center',
+            verticalAlign: 'bottom',
+          },
+        },
+      },
+    ],
+  },
+  legend: {
+    layout: 'vertical',
+    align: 'right',
+    verticalAlign: 'top',
+  },
 });
 
 const selectedCompositionType = ref('総人口');
