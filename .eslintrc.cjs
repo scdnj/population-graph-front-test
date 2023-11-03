@@ -23,6 +23,7 @@ module.exports = {
   plugins: ['vue'],
   rules: {
     "vue/multi-word-component-names": "off",
-    "@typescript-eslint/consistent-type-definitions": "off"
+    "@typescript-eslint/consistent-type-definitions": "off",
+    "@typescript-eslint/consistent-indexed-object-style": "off"
   },
 };
