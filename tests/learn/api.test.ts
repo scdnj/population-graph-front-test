@@ -1,9 +1,17 @@
 import axios from 'axios';
 import { config } from 'dotenv';
 
+async function wait(ms: number) {
+  return await new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 const headers = {
-  'X-API-KEY': config({ path: '.env.local' }).parsed.API_KEY,
+  'X-API-KEY': config({ path: '.env.local' }).parsed?.API_KEY,
 };
+beforeEach(async () => {
+  // 一秒間の平均リクエスト回数は5回なので、200ms待つ
+  await wait(200);
+});
 /**
  * 何を叩いても200が返るけどリクエストがおかしいとbodyにエラーがレスポンスされる。
  * bodyの型はstringだったり{ message: string, statusCode: string, description: string }だったりする。
