@@ -28,6 +28,16 @@ const options = ref<Options & ChartOptions>({
   yAxis: {
     title: {
       text: '人口数',
+      align: 'high',
+      rotation: 0,
+      textAlign: 'right',
+      y: -20,
+      offset: 20,
+    },
+    labels: {
+      formatter: (v) => {
+        return v.value.toLocaleString();
+      },
     },
   },
 });
