@@ -16,11 +16,11 @@ export type Composition = Array<{
 
 type ApiReturn<T> = {
   message: null;
-  result: { data: T };
+  result: T;
 };
 
 export class Api {
-  axios = axios.create({
+  private readonly axios = axios.create({
     headers: { 'X-API-KEY': key },
     baseURL: 'https://opendata.resas-portal.go.jp/api/v1/',
   });
@@ -30,7 +30,7 @@ export class Api {
    */
   async getPrefectures(): Promise<Prefecture[]> {
     const { data } = await this.axios.get<ApiReturn<Prefecture[]>>(`/prefectures`);
-    return data.result.data;
+    return data.result;
   }
 
   /**
@@ -39,15 +39,15 @@ export class Api {
    */
   async getCompositions(
     prefCodes: number[],
-  ): Promise<Array<{ prefCode: number; data: Composition[] }>> {
+  ): Promise<Array<{ prefCode: number; data: Composition }>> {
     if (prefCodes.length === 0) {
       return [];
     }
-    const result: Array<{ prefCode: number; data: Composition[] }> = [];
+    const result: Array<{ prefCode: number; data: Composition }> = [];
     // API側に複数指定するクエリがないので、都道府県ごとにリクエストを送る
     for (let i = 0; i < prefCodes.length; i++) {
       const prefCode = prefCodes[i];
-      const { data } = await this.axios.get<ApiReturn<Composition[]>>(
+      const { data } = await this.axios.get<ApiReturn<{ data: Composition }>>(
         `/population/composition/perYear?cityCode=-&prefCode=${prefCode}`,
       );
       result.push({ data: data.result.data, prefCode });

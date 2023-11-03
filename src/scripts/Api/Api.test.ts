@@ -10,14 +10,12 @@ beforeAll(() => {
   axios.get.mockImplementation(async (path: string) => {
     const wrap = <T>(data: T) => ({ data: { message: null, result: data } });
     if (path.match(/prefectures/) !== null) {
-      return wrap({
-        data: [
-          {
-            prefCode: 1,
-            prefName: '北海道',
-          },
-        ],
-      });
+      return wrap([
+        {
+          prefCode: 1,
+          prefName: '北海道',
+        },
+      ]);
     } else if (path.match(/composition/) !== null) {
       return wrap({
         boundaryYear: 2020,
