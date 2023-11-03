@@ -20,6 +20,10 @@ const options = ref<Options & ChartOptions>({
     title: {
       text: '年度',
     },
+    crosshair: {
+      color: 'gray',
+      dashStyle: 'DashDot',
+    },
   },
   yAxis: {
     title: {
