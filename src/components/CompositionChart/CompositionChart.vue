@@ -8,8 +8,12 @@ const props = defineProps<{
 }>();
 
 const options = ref<Options & ChartOptions>({
+  // タイトルを無入力にするとy軸の名前が見えなくなるのでtransparentで入れておいている。
   title: {
     text: '都道府県別人口',
+    style: {
+      color: 'transparent',
+    },
   },
 
   xAxis: {
