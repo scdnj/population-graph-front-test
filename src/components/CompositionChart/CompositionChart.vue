@@ -40,6 +40,13 @@ const options = ref<Options & ChartOptions>({
       },
     },
   },
+  tooltip: {
+    formatter: function () {
+      return (
+        '<b>' + this.series.name + '</b><br/>' + this.x + ': ' + this.y?.toLocaleString() + '人'
+      );
+    },
+  },
 });
 
 const selectedCompositionType = ref('総人口');
