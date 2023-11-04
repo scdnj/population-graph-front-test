@@ -77,14 +77,15 @@ const series = computed(() => {
     return {
       type: 'line',
       name: prefName,
-      data: composition
-        .find((d) => d.label === selectedCompositionType.value)
-        ?.data.map((c) => {
-          return {
-            x: c.year,
-            y: c.value,
-          };
-        }),
+      data:
+        composition
+          .find((d) => d.label === selectedCompositionType.value)
+          ?.data.map((c) => {
+            return {
+              x: c.year,
+              y: c.value,
+            };
+          }) ?? [],
     };
   });
 });
