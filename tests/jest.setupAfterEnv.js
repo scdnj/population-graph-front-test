@@ -3,3 +3,9 @@ jest.mock('@/scripts/Api/getApiKey', () => {
     getApiKey: () => '',
   };
 });
+
+jest.mock('@/isStorybook', () => {
+  return {
+    isStorybook: () => false,
+  };
+});
