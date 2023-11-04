@@ -1,5 +1,7 @@
 import axios from 'axios';
 import { getApiKey } from '@/scripts/Api/getApiKey';
+import { isStorybook } from '@/isStorybook';
+import { Api as ApiMock } from './__mocks__';
 
 const key = getApiKey();
 
@@ -18,7 +20,12 @@ type ApiReturn<T> = {
   result: T;
 };
 
-export class Api {
+export interface ApiInterface {
+  getPrefectures: () => Promise<Prefecture[]>;
+  getComposition: (prefCode: number) => Promise<Composition>;
+}
+
+class ApiImpl implements ApiInterface {
   private readonly axios = axios.create({
     headers: { 'X-API-KEY': key },
     baseURL: 'https://opendata.resas-portal.go.jp/api/v1/',
@@ -43,3 +50,7 @@ export class Api {
     return data.result.data;
   }
 }
+
+const Api = isStorybook() ? ApiMock : ApiImpl;
+
+export { Api };

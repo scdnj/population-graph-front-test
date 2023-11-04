@@ -29,7 +29,12 @@ https://note.yumemi.co.jp/n/ned7429b59556
 - [ ] VRT(グラフあるしあった方が良いかも？TDDでやったことはないし見た目もfixではないので後でいいかも)
 
 ## 注意書き
+
+### Storybookファイルで型エラーが出る
 vscode+Volarでの開発をする場合、テストファイルとStorybookファイルでvueファイルの型が適切に解釈されないことがあります。
 その場合はvscodeにbuiltinされているtypescript言語機能プラグイン(vscode.typescript-language-features)を切ってください。
 
 参考: https://vuejs.org/guide/typescript/overview.html#volar-takeover-mode
+
+### StorybookでAPIを叩きたい
+コンポーネントテストでAPIを直接叩くのはあまり良くないのでapiのサービスクラスを作って、jestならそれをmock、Storybookは環境変数(`import.meta.env.STORYBOOK`)を読んでmockクラスに置き換えています。
