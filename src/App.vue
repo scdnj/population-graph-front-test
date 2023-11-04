@@ -49,8 +49,8 @@ onMounted(async () => {
 });
 
 const getComposition = async (prefCode: number) => {
-  const [composition] = await api.getCompositions([prefCode]);
-  return composition.data;
+  const composition = await api.getComposition(prefCode);
+  return composition;
 };
 </script>
 

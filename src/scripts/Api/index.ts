@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { getApiKey } from '@/scripts/Api/getApiKey';
-import { wait } from '../util/wait';
 
 const key = getApiKey();
 
@@ -35,26 +34,12 @@ export class Api {
 
   /**
    * 引数で入力した都道府県の人口構成を返す
-   * @param prefCodes 都道府県コードの配列
+   * @param prefCode 都道府県コード
    */
-  async getCompositions(
-    prefCodes: number[],
-  ): Promise<Array<{ prefCode: number; data: Composition }>> {
-    if (prefCodes.length === 0) {
-      return [];
-    }
-    const result: Array<{ prefCode: number; data: Composition }> = [];
-    // API側に複数指定するクエリがないので、都道府県ごとにリクエストを送る
-    for (let i = 0; i < prefCodes.length; i++) {
-      const prefCode = prefCodes[i];
-      const { data } = await this.axios.get<ApiReturn<{ data: Composition }>>(
-        `/population/composition/perYear?cityCode=-&prefCode=${prefCode}`,
-      );
-      result.push({ data: data.result.data, prefCode });
-
-      // 一秒間の平均リクエスト回数は5回なので、200ms待つ
-      await wait(200);
-    }
-    return result;
+  async getComposition(prefCode: number): Promise<Composition> {
+    const { data } = await this.axios.get<ApiReturn<{ data: Composition }>>(
+      `/population/composition/perYear?cityCode=-&prefCode=${prefCode}`,
+    );
+    return data.result.data;
   }
 }

@@ -79,39 +79,59 @@ describe('getPrefectures', () => {
 });
 
 describe('getComposition', () => {
-  it('dataが空の場合', async () => {
-    const api = new Api();
-    const compositions = await api.getCompositions([]);
-    expect(compositions).toEqual([]);
+  it('(mockした)レスポンス内容の値のresultを取り出している', async () => {
+    const compositions = await new Api().getComposition(1);
+    expect(compositions).toEqual([
+      {
+        data: [
+          {
+            value: 50,
+            year: 1960,
+          },
+        ],
+        label: '総人口',
+      },
+      {
+        data: [
+          {
+            value: 10,
+            year: 1960,
+          },
+        ],
+        label: '年少人口',
+      },
+      {
+        data: [
+          {
+            value: 20,
+            year: 1960,
+          },
+        ],
+        label: '生産年齢人口',
+      },
+      {
+        data: [
+          {
+            value: 20,
+            year: 1960,
+          },
+        ],
+        label: '老年人口',
+      },
+    ]);
   });
-  it('data = [1]', async () => {
-    const api = new Api();
-    const compositions = await api.getCompositions([1]);
-    expect(compositions.length).toEqual(1);
-  });
-  it('data = [1, 2]', async () => {
-    const api = new Api();
-    const compositions = await api.getCompositions([1, 2]);
-    expect(compositions.length).toEqual(2);
-  });
-  it('正しいURLが叩かれていることを確認', async () => {
-    const api = new Api();
-    const [composition] = await api.getCompositions([1]);
-    expect(composition.prefCode).toEqual(1);
-    expect(axios.get).toHaveBeenCalledWith('/population/composition/perYear?cityCode=-&prefCode=1');
-  });
-  it('prefCode複数指定で複数回APIが叩かれる', async () => {
-    const api = new Api();
-    const [composition, composition2] = await api.getCompositions([1, 2]);
-    expect(composition.prefCode).toEqual(1);
-    expect(composition2.prefCode).toEqual(2);
-    expect(axios.get).toHaveBeenNthCalledWith(
-      1,
-      '/population/composition/perYear?cityCode=-&prefCode=1',
-    );
-    expect(axios.get).toHaveBeenNthCalledWith(
-      2,
-      '/population/composition/perYear?cityCode=-&prefCode=2',
-    );
+  describe('引数で入れた値がprefCodeとしてクエリに入っている', () => {
+    test('prefCode = 1', async () => {
+      await new Api().getComposition(1);
+      expect(axios.get).toHaveBeenCalledWith(
+        '/population/composition/perYear?cityCode=-&prefCode=1',
+      );
+    });
+    test('prefCode = 2', async () => {
+      await new Api().getComposition(2);
+      expect(axios.get).toHaveBeenCalledWith(
+        '/population/composition/perYear?cityCode=-&prefCode=2',
+      );
+    });
   });
 });
