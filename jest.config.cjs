@@ -10,7 +10,7 @@ module.exports = {
     '^.+\\.vue$': '@vue/vue3-jest', // Update to match your installed version
   },
   testMatch: ['**/?(*.)+(spec|test).[jt]s?(x)'],
-  setupFilesAfterEnv: ['<rootDir>/tests/jest.setupAfterEnv.js'],
+  setupFilesAfterEnv: ['<rootDir>/tests/jest.setupAfterEnv.ts'],
   testPathIgnorePatterns: ['<rootDir>/tests/learn'],
   collectCoverageFrom: ['src/**/*.{js,jsx,ts,tsx}'],
   setupFiles: ['<rootDir>/tests/jest.setup.js'],

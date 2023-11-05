@@ -1,3 +1,5 @@
+import '@testing-library/jest-dom';
+
 jest.mock('@/scripts/Api/getApiKey', () => {
   return {
     getApiKey: () => '',
