@@ -4,6 +4,7 @@ import { Chart, type ChartOptions } from 'highcharts-vue';
 import { type Options } from 'highcharts';
 import { type CompositionType, type Composition } from '@/scripts/Api';
 import RadioGroup from '@/components/uiParts/RadioGroup/RadioGroup.vue';
+import { simplify } from '@/scripts/simplify';
 const props = defineProps<{
   compositions: Array<{ prefName: string; composition: Composition }>;
 }>();
@@ -41,7 +42,7 @@ const options = ref<Options & ChartOptions>({
       rotation: 0,
       textAlign: 'right',
       y: -20,
-      offset: 20,
+      offset: 10,
     },
     labels: {
       formatter: (v) => {
@@ -67,6 +68,13 @@ const options = ref<Options & ChartOptions>({
             layout: 'horizontal',
             align: 'center',
             verticalAlign: 'bottom',
+          },
+          yAxis: {
+            labels: {
+              formatter: (v) => {
+                return simplify(+v.value);
+              },
+            },
           },
         },
       },
