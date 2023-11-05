@@ -1,25 +1,4 @@
-<script setup lang="ts">
-import { onMounted } from 'vue';
-import Checkbox from './components/Checkbox/Checkbox.vue';
-import CompositionChart from './components/CompositionChart/CompositionChart.vue';
-import { useComposition } from './scripts/composables/useComposition';
-
-const { fetchPrefectures, prefectures, checkedPrefectures, compositions } = useComposition();
-
-onMounted(fetchPrefectures);
-</script>
-
+<script setup lang="ts"></script>
 <template>
-  <div>
-    <div class="flex flex-wrap text-lg font-bold">
-      <div v-for="prefecture in prefectures" :key="prefecture.prefCode" class="w-24">
-        <Checkbox
-          v-model="checkedPrefectures[prefecture.prefCode]"
-          :label="prefecture.prefName"
-          class="p-1"
-        />
-      </div>
-    </div>
-    <CompositionChart :compositions="compositions" />
-  </div>
+  <PrefecturesCompositionViewer />
 </template>
