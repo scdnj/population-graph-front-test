@@ -11,7 +11,7 @@ const vModel = computed({
 });
 </script>
 <template>
-  <label class="flex items-center text-sm space-x-2">
+  <label :aria-checked="modelValue" class="flex items-center text-sm space-x-2">
     <input v-model="vModel" type="checkbox" />
     <div>
       {{ label }}

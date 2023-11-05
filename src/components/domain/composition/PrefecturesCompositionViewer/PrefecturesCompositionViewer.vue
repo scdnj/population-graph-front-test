@@ -18,7 +18,7 @@ onMounted(fetchPrefectures);
           <Checkbox
             v-model="checkedPrefectures[prefecture.prefCode]"
             :label="prefecture.prefName"
-            class="sm:p-1 py-2 pl-1 m-1 sm:m-0 bg-blue-500/20"
+            class="sm:p-1 py-2 pl-1 m-1 bg-blue-500/20 hover:bg-blue-500/40 transition-colors aria-checked:bg-blue-500/50 rounded-sm"
           />
         </div>
       </div>
