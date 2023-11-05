@@ -24,10 +24,12 @@ it('fetchPrefecturesするとprefecturesに値が入る', async () => {
 
 it('prefecturesをcheckするとcompositionに値が入る', async () => {
   jest.spyOn(Api.prototype, 'getComposition').mockImplementation(async () => {
-    return [
-      { label: '総人口', data: [{ value: 1, year: 1960 }] },
-      { label: 'あいうえお人口', data: [{ value: 1, year: 1960 }] },
-    ];
+    return {
+      総人口: [{ value: 1000, year: 1960 }],
+      年少人口: [{ value: 100, year: 1960 }],
+      生産年齢人口: [{ value: 10, year: 1960 }],
+      老年人口: [{ value: 1, year: 1960 }],
+    };
   });
   const hook = useComposition();
 
@@ -41,10 +43,12 @@ it('prefecturesをcheckするとcompositionに値が入る', async () => {
 
   expect(hook.compositions.value).toEqual([
     {
-      composition: [
-        { data: [{ value: 1, year: 1960 }], label: '総人口' },
-        { data: [{ value: 1, year: 1960 }], label: 'あいうえお人口' },
-      ],
+      composition: {
+        総人口: [{ value: 1000, year: 1960 }],
+        年少人口: [{ value: 100, year: 1960 }],
+        生産年齢人口: [{ value: 10, year: 1960 }],
+        老年人口: [{ value: 1, year: 1960 }],
+      },
       prefName: '都道府県',
     },
   ]);
@@ -52,10 +56,12 @@ it('prefecturesをcheckするとcompositionに値が入る', async () => {
 
 it('同じprefCodeを何度もチェックしても値を取得していたら再取得しない', async () => {
   const spy = jest.spyOn(Api.prototype, 'getComposition').mockImplementation(async () => {
-    return [
-      { label: '総人口', data: [{ value: 1, year: 1960 }] },
-      { label: 'あいうえお人口', data: [{ value: 1, year: 1960 }] },
-    ];
+    return {
+      総人口: [{ value: 1000, year: 1960 }],
+      年少人口: [{ value: 100, year: 1960 }],
+      生産年齢人口: [{ value: 10, year: 1960 }],
+      老年人口: [{ value: 1, year: 1960 }],
+    };
   });
   const hook = useComposition();
   await hook.fetchPrefectures();
@@ -73,10 +79,12 @@ it('同じprefCodeを何度もチェックしても値を取得していたら�
 
 it('二回目のチェックでも人口に値が入っている', async () => {
   jest.spyOn(Api.prototype, 'getComposition').mockImplementation(async () => {
-    return [
-      { label: '総人口', data: [{ value: 1, year: 1960 }] },
-      { label: 'あいうえお人口', data: [{ value: 1, year: 1960 }] },
-    ];
+    return {
+      総人口: [{ value: 1000, year: 1960 }],
+      年少人口: [{ value: 100, year: 1960 }],
+      生産年齢人口: [{ value: 10, year: 1960 }],
+      老年人口: [{ value: 1, year: 1960 }],
+    };
   });
   const hook = useComposition();
   await hook.fetchPrefectures();
@@ -89,10 +97,12 @@ it('二回目のチェックでも人口に値が入っている', async () => {
   await wait(1);
   expect(hook.compositions.value).toEqual([
     {
-      composition: [
-        { data: [{ value: 1, year: 1960 }], label: '総人口' },
-        { data: [{ value: 1, year: 1960 }], label: 'あいうえお人口' },
-      ],
+      composition: {
+        総人口: [{ value: 1000, year: 1960 }],
+        年少人口: [{ value: 100, year: 1960 }],
+        生産年齢人口: [{ value: 10, year: 1960 }],
+        老年人口: [{ value: 1, year: 1960 }],
+      },
       prefName: '都道府県',
     },
   ]);

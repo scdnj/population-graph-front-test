@@ -56,44 +56,12 @@ describe('getPrefectures', () => {
 describe('getComposition', () => {
   it('(mockした)レスポンス内容の値のresultを取り出している', async () => {
     const compositions = await new Api().getComposition(1);
-    expect(compositions).toEqual([
-      {
-        data: [
-          {
-            value: 50,
-            year: 1960,
-          },
-        ],
-        label: '総人口',
-      },
-      {
-        data: [
-          {
-            value: 10,
-            year: 1960,
-          },
-        ],
-        label: '年少人口',
-      },
-      {
-        data: [
-          {
-            value: 20,
-            year: 1960,
-          },
-        ],
-        label: '生産年齢人口',
-      },
-      {
-        data: [
-          {
-            value: 20,
-            year: 1960,
-          },
-        ],
-        label: '老年人口',
-      },
-    ]);
+    expect(compositions).toEqual({
+      総人口: [{ value: 50, year: 1960 }],
+      年少人口: [{ value: 10, year: 1960 }],
+      生産年齢人口: [{ value: 20, year: 1960 }],
+      老年人口: [{ value: 20, year: 1960 }],
+    });
   });
   describe('引数で入れた値がprefCodeとしてクエリに入っている', () => {
     test('prefCode = 1', async () => {

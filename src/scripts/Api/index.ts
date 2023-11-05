@@ -15,7 +15,7 @@ export type Prefecture = {
   prefName: string;
 };
 
-export type Composition = CompositionSubGroup[];
+type ApiComposition = ApiReturn<{ boundaryYear: number; data: CompositionSubGroup[] }>;
 
 type CompositionSubGroup = {
   label: CompositionType;
@@ -26,6 +26,7 @@ export type CompositionType = '総人口' | '年少人口' | '生産年齢人口
 
 export type CompositionData = { year: number; value: number };
 
+export type Composition = { [P in CompositionType]: CompositionData[] };
 export interface ApiInterface {
   getPrefectures: () => Promise<Prefecture[]>;
   getComposition: (prefCode: number) => Promise<Composition>;
@@ -50,12 +51,25 @@ class ApiImpl implements ApiInterface {
    * @param prefCode 都道府県コード
    */
   async getComposition(prefCode: number): Promise<Composition> {
-    const { data } = await this.axios.get<ApiReturn<{ data: Composition }>>(
+    const { data } = await this.axios.get<ApiComposition>(
       `/population/composition/perYear?cityCode=-&prefCode=${prefCode}`,
     );
-    return data.result.data;
+    return {
+      総人口: getCompositionData(data, '総人口'),
+      年少人口: getCompositionData(data, '年少人口'),
+      生産年齢人口: getCompositionData(data, '生産年齢人口'),
+      老年人口: getCompositionData(data, '老年人口'),
+    };
   }
 }
+
+const getCompositionData = (data: ApiComposition, label: CompositionType): CompositionData[] => {
+  const returnValue = data.result.data.find((d) => d.label === label)?.data;
+  if (returnValue === undefined) {
+    throw new Error(label + 'のデータが見つかりませんでした');
+  }
+  return returnValue;
+};
 
 const Api = isStorybook() ? ApiMock : ApiImpl;
 

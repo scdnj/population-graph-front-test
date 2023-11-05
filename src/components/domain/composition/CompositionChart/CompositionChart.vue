@@ -2,7 +2,7 @@
 import { computed, ref } from 'vue';
 import { Chart, type ChartOptions } from 'highcharts-vue';
 import { type Options } from 'highcharts';
-import { type Composition } from '@/scripts/Api';
+import { type CompositionType, type Composition } from '@/scripts/Api';
 const props = defineProps<{
   compositions: Array<{ prefName: string; composition: Composition }>;
 }>();
@@ -70,7 +70,7 @@ const options = ref<Options & ChartOptions>({
   },
 });
 
-const selectedCompositionType = ref('総人口');
+const selectedCompositionType = ref<CompositionType>('総人口');
 
 const series = computed(() => {
   return props.compositions.map(({ prefName, composition }) => {
@@ -78,14 +78,10 @@ const series = computed(() => {
       type: 'line',
       name: prefName,
       data:
-        composition
-          .find((d) => d.label === selectedCompositionType.value)
-          ?.data.map((c) => {
-            return {
-              x: c.year,
-              y: c.value,
-            };
-          }) ?? [],
+        composition[selectedCompositionType.value].map((c) => ({
+          x: c.year,
+          y: c.value,
+        })) ?? [],
     };
   });
 });
