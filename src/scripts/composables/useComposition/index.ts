@@ -31,16 +31,23 @@ export const useComposition = () => {
 
   const compositions = ref<{ [prefCode: number]: Composition }>({});
 
-  const compositionAndNames = computed(() => {
-    const checkedPrefectures = checkedArray.value
-      .map((prefCode) => prefectures.value.find((p) => +p.prefCode === +prefCode))
-      .filter((p): p is Prefecture => p !== undefined);
+  const compositionAndNames = computed(
+    (): Array<{ prefName: string; composition: Composition }> => {
+      const checkedPrefectures = checkedArray.value
+        .map((prefCode) => prefectures.value.find((p) => +p.prefCode === +prefCode))
+        .filter((p): p is Prefecture => p !== undefined);
 
-    return checkedPrefectures.map(({ prefName, prefCode }) => ({
-      prefName,
-      composition: compositions.value[prefCode] ?? [],
-    }));
-  });
+      return checkedPrefectures.map(({ prefName, prefCode }) => ({
+        prefName,
+        composition: compositions.value[prefCode] ?? {
+          総人口: [],
+          年少人口: [],
+          生産年齢人口: [],
+          老年人口: [],
+        },
+      }));
+    },
+  );
 
   return {
     async fetchPrefectures() {
