@@ -9,6 +9,14 @@ const props = defineProps<{
 }>();
 
 const options = ref<Options & ChartOptions>({
+  accessibility: {
+    description: '都道府県別人口',
+    point: {
+      descriptionFormatter: (p) => {
+        return `${p.x}年の${p.series.name}の${selectedCompositionType.value}は${p.y}人です。`;
+      },
+    },
+  },
   // タイトルを無入力にするとy軸の名前が見えなくなるのでtransparentで入れておいている。
   title: {
     text: '都道府県別人口',
