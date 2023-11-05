@@ -1,12 +1,12 @@
 import { within } from '@storybook/testing-library';
-import App from './App.vue';
+import PrefecturesCompositionViewer from './PrefecturesCompositionViewer.vue';
 import type { Meta, StoryObj } from '@storybook/vue3';
-import { wait } from './scripts/util/wait';
+import { wait } from '@/scripts/util/wait';
 
-type Story = StoryObj<typeof App>;
-type M = Meta<typeof App>;
+type Story = StoryObj<typeof PrefecturesCompositionViewer>;
+type M = Meta<typeof PrefecturesCompositionViewer>;
 const meta: M = {
-  component: App,
+  component: PrefecturesCompositionViewer,
   args: {},
   tags: ['autodocs'],
 };
