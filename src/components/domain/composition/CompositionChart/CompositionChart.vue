@@ -3,6 +3,7 @@ import { computed, ref } from 'vue';
 import { Chart, type ChartOptions } from 'highcharts-vue';
 import { type Options } from 'highcharts';
 import { type CompositionType, type Composition } from '@/scripts/Api';
+import RadioGroup from '@/components/uiParts/RadioGroup/RadioGroup.vue';
 const props = defineProps<{
   compositions: Array<{ prefName: string; composition: Composition }>;
 }>();
@@ -72,6 +73,8 @@ const options = ref<Options & ChartOptions>({
 
 const selectedCompositionType = ref<CompositionType>('総人口');
 
+const radioOptions: CompositionType[] = ['総人口', '年少人口', '生産年齢人口', '老年人口'];
+
 const series = computed(() => {
   return props.compositions.map(({ prefName, composition }) => {
     return {
@@ -88,4 +91,5 @@ const series = computed(() => {
 </script>
 <template>
   <Chart :options="{ ...options, series }"></Chart>
+  <RadioGroup v-model="selectedCompositionType" :options="radioOptions" />
 </template>
