@@ -3,6 +3,11 @@ import { getApiKey } from '@/scripts/Api/getApiKey';
 import { isStorybook } from '@/isStorybook';
 import { Api as ApiMock } from './__mocks__';
 
+type ApiReturn<T> = {
+  message: null;
+  result: T;
+};
+
 const key = getApiKey();
 
 export type Prefecture = {
@@ -10,15 +15,16 @@ export type Prefecture = {
   prefName: string;
 };
 
-export type Composition = Array<{
-  label: string;
-  data: Array<{ year: number; value: number }>;
-}>;
+export type Composition = CompositionSubGroup[];
 
-type ApiReturn<T> = {
-  message: null;
-  result: T;
+type CompositionSubGroup = {
+  label: CompositionType;
+  data: CompositionData[];
 };
+
+export type CompositionType = '総人口' | '年少人口' | '生産年齢人口' | '老年人口';
+
+export type CompositionData = { year: number; value: number };
 
 export interface ApiInterface {
   getPrefectures: () => Promise<Prefecture[]>;
