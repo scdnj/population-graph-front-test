@@ -1,7 +1,7 @@
 ## 現状
 
 ## この feature でやること
-CIを入れる。githubでCIを入れるのが久しぶりでよく覚えていなかったのでchatGPTに聞いた。pnpmをnpmからinstallしてるところだけ気になったので調べてみたらpnpm/actions-setupってのがあるらしかったのでそれを使った。
+チェックボックスにcursor:pointerを入れる
 
 ### グラフ課題
 - boundaryYear もわかるようにしたい。
@@ -12,7 +12,7 @@ CIを入れる。githubでCIを入れるのが久しぶりでよく覚えてい�
 
 ## メモ
 prettier-tailwindのプラグイン入れても動かない。
-- [ ] チェックボックスのcursor:pointer
+- [x] チェックボックスのcursor:pointer
 
 ## やれたら嬉しい
 - [ ] チェックボックスをホバーしたらグラフ連動してほしい

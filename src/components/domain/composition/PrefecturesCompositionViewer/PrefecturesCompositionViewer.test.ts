@@ -33,7 +33,7 @@ test('ロードに時間のかかる関数の場合、checkboxがloading状態�
   // loading状態であることを確かめるテストをうまく思いつけなかったので一旦inlineSnapshotで対応
   expect(checkbox).toMatchInlineSnapshot(`
     <input
-      class="opacity-0 w-0 h-0"
+      class="cursor-pointer opacity-0 w-0 h-0"
       disabled=""
       type="checkbox"
     />
