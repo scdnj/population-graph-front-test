@@ -29,6 +29,7 @@ test('ロードに時間のかかる関数の場合、checkboxがloading状態�
   await jest.advanceTimersByTimeAsync(1);
   const checkbox = container.getByLabelText('東京都');
   await userEvent.click(checkbox);
+  await jest.advanceTimersByTimeAsync(1);
   // loading状態であることを確かめるテストをうまく思いつけなかったので一旦inlineSnapshotで対応
   expect(checkbox).toMatchInlineSnapshot(`
     <input

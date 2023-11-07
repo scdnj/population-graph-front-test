@@ -1,18 +1,39 @@
 import { Api, type Composition, type Prefecture } from '@/scripts/Api';
-import { computed, readonly, ref } from 'vue';
+import { computed, readonly, ref, watch } from 'vue';
 
 export const useComposition = () => {
   const api = new Api();
 
   const prefectures = ref<Prefecture[]>([]);
 
-  const checked = ref<{ [prefCode: number]: boolean | 'loading' }>({});
+  const checked = ref<{ [prefCode: number]: boolean }>({});
+
+  const loadingCompositions = ref<{ [prefCode: number]: boolean }>({});
 
   const checkedArray = computed(() => {
     return Object.entries(checked.value)
-      .filter(([, v]) => v === true)
+      .filter(([, v]) => v)
       .map(([k]) => +k);
   });
+
+  watch(
+    checkedArray,
+    (checkedArray) => {
+      for (const prefCode of checkedArray) {
+        if (
+          compositions.value[prefCode] === undefined &&
+          loadingCompositions.value[prefCode] !== true
+        ) {
+          loadingCompositions.value[prefCode] = true;
+          void api.getComposition(prefCode).then((composition) => {
+            compositions.value[prefCode] = composition;
+            loadingCompositions.value[prefCode] = false;
+          });
+        }
+      }
+    },
+    { deep: true },
+  );
 
   const compositions = ref<{ [prefCode: number]: Composition }>({});
 
@@ -39,22 +60,8 @@ export const useComposition = () => {
       prefectures.value = await api.getPrefectures();
     },
     compositions: compositionAndNames,
-    prefectures,
-    checkedPrefectures: readonly(computed(() => checked.value)),
-    setCheckedPrefectures: (prefCode: number, value: boolean) => {
-      if (value) {
-        if (compositions.value[prefCode] === undefined) {
-          checked.value[prefCode] = 'loading';
-          void api.getComposition(prefCode).then((composition) => {
-            compositions.value[prefCode] = composition;
-            checked.value[prefCode] = true;
-          });
-        } else {
-          checked.value[prefCode] = true;
-        }
-      } else {
-        checked.value[prefCode] = false;
-      }
-    },
+    prefectures: readonly(prefectures),
+    checkedPrefectures: checked,
+    loadingCompositions,
   };
 };

@@ -35,8 +35,8 @@ it('prefecturesをcheckするとcompositionに値が入る', async () => {
   await hook.fetchPrefectures();
   const prefCode = 15;
   expect(hook.compositions.value.length).toBe(0);
-  hook.setCheckedPrefectures(prefCode, true);
 
+  hook.checkedPrefectures.value[prefCode] = true;
   // 1ms待たないとcompositionに値が入らない
   await jest.advanceTimersByTimeAsync(1);
 
@@ -66,12 +66,12 @@ it('同じprefCodeを何度もチェックしても値を取得していたら�
   await hook.fetchPrefectures();
   const prefCode = 15;
   expect(spy).not.toHaveBeenCalled();
-  hook.setCheckedPrefectures(prefCode, true);
+  hook.checkedPrefectures.value[prefCode] = true;
   await jest.advanceTimersByTimeAsync(1);
   expect(spy).toHaveBeenCalledTimes(1);
-  hook.setCheckedPrefectures(prefCode, false);
+  hook.checkedPrefectures.value[prefCode] = false;
   await jest.advanceTimersByTimeAsync(1);
-  hook.setCheckedPrefectures(prefCode, true);
+  hook.checkedPrefectures.value[prefCode] = true;
   await jest.advanceTimersByTimeAsync(1);
   expect(spy).toHaveBeenCalledTimes(1);
 });
@@ -88,11 +88,11 @@ it('二回目のチェックでも人口に値が入っている', async () => {
   const hook = useComposition();
   await hook.fetchPrefectures();
   const prefCode = 15;
-  hook.setCheckedPrefectures(prefCode, true);
+  hook.checkedPrefectures.value[prefCode] = true;
   await jest.advanceTimersByTimeAsync(1);
-  hook.setCheckedPrefectures(prefCode, false);
+  hook.checkedPrefectures.value[prefCode] = false;
   await jest.advanceTimersByTimeAsync(1);
-  hook.setCheckedPrefectures(prefCode, true);
+  hook.checkedPrefectures.value[prefCode] = true;
   await jest.advanceTimersByTimeAsync(1);
   expect(hook.compositions.value).toEqual([
     {
@@ -121,8 +121,9 @@ it('APIの応答が遅いときはcheckedのstateがloadingになる', async () 
   const hook = useComposition();
   await hook.fetchPrefectures();
   const prefCode = 15;
-  hook.setCheckedPrefectures(prefCode, true);
-  expect(hook.checkedPrefectures.value[prefCode]).toEqual('loading');
+  hook.checkedPrefectures.value[prefCode] = true;
+  await jest.advanceTimersByTimeAsync(1);
+  expect(hook.loadingCompositions.value[prefCode]).toEqual(true);
 });
 
 it('応答が返るとtrueになる', async () => {
@@ -139,8 +140,9 @@ it('応答が返るとtrueになる', async () => {
   const hook = useComposition();
   await hook.fetchPrefectures();
   const prefCode = 15;
-  hook.setCheckedPrefectures(prefCode, true);
+  hook.checkedPrefectures.value[prefCode] = true;
+  await jest.advanceTimersByTimeAsync(1);
   jest.runAllTimers();
   await jest.advanceTimersByTimeAsync(1);
-  expect(hook.checkedPrefectures.value[prefCode]).toEqual(true);
+  expect(hook.loadingCompositions.value[prefCode]).toEqual(false);
 });

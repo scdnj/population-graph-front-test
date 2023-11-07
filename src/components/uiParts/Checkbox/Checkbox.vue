@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, defineProps } from 'vue';
-const props = defineProps<{ modelValue?: boolean; label?: string; loading: boolean }>();
+const props = defineProps<{ modelValue?: boolean; label?: string; loading?: boolean }>();
 const emits = defineEmits<{ 'update:model-value': [value: boolean] }>();
 
 const vModel = computed({
