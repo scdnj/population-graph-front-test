@@ -29,8 +29,8 @@ export const useComposition = () => {
   };
 
   watch(
-    () =>
-      // チェックがtrueのprefCodeの配列
+    // チェックがtrueのprefCodeの配列
+    (): number[] =>
       Object.entries(checked.value)
         .filter(([, v]) => v)
         .map(([k]) => +k),
