@@ -27,3 +27,10 @@ export const Labeled: Story = {
     label: 'ラベルつき',
   },
 };
+
+export const Loading: Story = {
+  args: {
+    modelValue: 'loading',
+    label: 'ロード中',
+  },
+};
