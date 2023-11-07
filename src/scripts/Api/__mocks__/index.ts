@@ -7,12 +7,17 @@ export class Api implements ApiInterface {
       { prefCode: 2, prefName: '青森県' },
       { prefCode: 3, prefName: '東京都' },
       { prefCode: 4, prefName: 'load' },
+      { prefCode: 5, prefName: 'エラー' },
     ];
   }
 
   async getComposition(prefCode: number): Promise<Composition> {
     if (prefCode === 4) {
       await new Promise((resolve) => setTimeout(resolve, 3000));
+    }
+    if (prefCode === 5) {
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      throw new Error('エラーが発生しました');
     }
     return {
       総人口: [{ value: 50 * prefCode, year: 1960 }],
