@@ -3,13 +3,23 @@ import { useComposition } from '.';
 import { Api } from '@/scripts/Api';
 
 jest.mock('@/scripts/Api');
-jest.spyOn(Api.prototype, 'getPrefectures').mockResolvedValue([
-  { prefCode: 15, prefName: '都道府県' },
-  { prefCode: 151, prefName: 'aaaaa' },
-]);
+let compositionSpy: jest.SpyInstance;
 
 beforeEach(() => {
   jest.clearAllMocks();
+  jest.spyOn(Api.prototype, 'getPrefectures').mockResolvedValue([
+    { prefCode: 15, prefName: '都道府県' },
+    { prefCode: 151, prefName: 'aaaaa' },
+  ]);
+
+  compositionSpy = jest.spyOn(Api.prototype, 'getComposition').mockImplementation(async () => {
+    return {
+      総人口: [{ value: 1000, year: 1960 }],
+      年少人口: [{ value: 100, year: 1960 }],
+      生産年齢人口: [{ value: 10, year: 1960 }],
+      老年人口: [{ value: 1, year: 1960 }],
+    };
+  });
 });
 
 it('fetchPrefecturesするとprefecturesに値が入る', async () => {
@@ -23,14 +33,6 @@ it('fetchPrefecturesするとprefecturesに値が入る', async () => {
 });
 
 it('prefecturesをcheckするとcompositionに値が入る', async () => {
-  jest.spyOn(Api.prototype, 'getComposition').mockImplementation(async () => {
-    return {
-      総人口: [{ value: 1000, year: 1960 }],
-      年少人口: [{ value: 100, year: 1960 }],
-      生産年齢人口: [{ value: 10, year: 1960 }],
-      老年人口: [{ value: 1, year: 1960 }],
-    };
-  });
   const hook = useComposition();
 
   await hook.fetchPrefectures();
@@ -54,7 +56,7 @@ it('prefecturesをcheckするとcompositionに値が入る', async () => {
 });
 
 it('同じprefCodeを何度もチェックしても値を取得していたら再取得しない', async () => {
-  const spy = jest.spyOn(Api.prototype, 'getComposition').mockImplementation(async () => {
+  const spy = compositionSpy.mockImplementation(async () => {
     return {
       総人口: [{ value: 1000, year: 1960 }],
       年少人口: [{ value: 100, year: 1960 }],
@@ -77,7 +79,7 @@ it('同じprefCodeを何度もチェックしても値を取得していたら�
 });
 
 it('二回目のチェックでも人口に値が入っている', async () => {
-  jest.spyOn(Api.prototype, 'getComposition').mockImplementation(async () => {
+  compositionSpy.mockImplementation(async () => {
     return {
       総人口: [{ value: 1000, year: 1960 }],
       年少人口: [{ value: 100, year: 1960 }],
@@ -134,11 +136,10 @@ it('APIの応答が遅いときはcheckedのstateがloadingになる', async () 
   expect(hook.loadingCompositions.value[prefCode]).toEqual(true);
 });
 
-it('応答が返るとtrueになる', async () => {
+it('ロードが終わったらloadingはfalseになっている', async () => {
   jest.useFakeTimers();
   jest.spyOn(Api.prototype, 'getComposition').mockImplementation(async () => {
-    await waitForMicroTasks();
-
+    await jest.advanceTimersByTimeAsync(10000);
     return {
       総人口: [{ value: 1000, year: 1960 }],
       年少人口: [{ value: 100, year: 1960 }],
@@ -146,6 +147,23 @@ it('応答が返るとtrueになる', async () => {
       老年人口: [{ value: 1, year: 1960 }],
     };
   });
+  const hook = useComposition();
+  await hook.fetchPrefectures();
+  const prefCode = 15;
+  hook.checkedPrefectures.value[prefCode] = true;
+
+  await waitForMicroTasks();
+
+  expect(hook.loadingCompositions.value[prefCode]).toEqual(true);
+
+  jest.advanceTimersByTime(10000);
+  await waitForMicroTasks();
+
+  expect(hook.loadingCompositions.value[prefCode]).toEqual(false);
+});
+
+it('応答が返るとtrueになる', async () => {
+  jest.useFakeTimers();
   const hook = useComposition();
   await hook.fetchPrefectures();
   const prefCode = 15;
@@ -168,14 +186,6 @@ describe('チェックした順番通りにcompositionが並ぶ', () => {
       { prefCode: 3, prefName: '3' },
       { prefCode: 4, prefName: '4' },
     ]);
-    jest.spyOn(Api.prototype, 'getComposition').mockImplementation(async () => {
-      return {
-        総人口: [{ value: 1000, year: 1960 }],
-        年少人口: [{ value: 100, year: 1960 }],
-        生産年齢人口: [{ value: 10, year: 1960 }],
-        老年人口: [{ value: 1, year: 1960 }],
-      };
-    });
   });
   test('昇順', async () => {
     const hook = useComposition();
@@ -196,5 +206,39 @@ describe('チェックした順番通りにcompositionが並ぶ', () => {
     }
 
     expect(hook.compositions.value.map((d) => d.prefName)).toEqual(['4', '3', '2', '1']);
+  });
+});
+
+describe('エラーがあった時', () => {
+  it('prefecturesを取りそこねた場合は初期状態から変化が無い', async () => {
+    jest.spyOn(Api.prototype, 'getPrefectures').mockRejectedValueOnce(new Error('エラー1'));
+    const hook = useComposition();
+    await expect(hook.fetchPrefectures()).rejects.toThrow();
+    await waitForMicroTasks();
+    expect(hook.compositions.value).toEqual(useComposition().compositions.value);
+    expect(hook.prefectures.value).toEqual(useComposition().prefectures.value);
+    expect(hook.checkedPrefectures.value).toEqual(useComposition().checkedPrefectures.value);
+    expect(hook.loadingCompositions.value).toEqual(useComposition().loadingCompositions.value);
+  });
+  describe('compositionを取りそこねた場合', () => {
+    let hook: ReturnType<typeof useComposition>;
+    const prefCode = 15;
+    beforeEach(async () => {
+      jest.spyOn(Api.prototype, 'getComposition').mockRejectedValueOnce(new Error('エラー1'));
+      hook = useComposition();
+      await hook.fetchPrefectures();
+      await waitForMicroTasks();
+      hook.checkedPrefectures.value[prefCode] = true;
+      await waitForMicroTasks();
+    });
+    it('compositionに新しい値は追加されない', () => {
+      expect(hook.compositions.value).toEqual(useComposition().compositions.value);
+    });
+    it('チェックされない', () => {
+      expect(hook.checkedPrefectures.value[prefCode]).toBeFalsy();
+    });
+    it('ローディングも終わっている', () => {
+      expect(hook.loadingCompositions.value[prefCode]).toBeFalsy();
+    });
   });
 });

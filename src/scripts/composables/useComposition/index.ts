@@ -1,5 +1,10 @@
-import { Api, type Composition, type Prefecture } from '@/scripts/Api';
+import { Api, type ApiError, type Composition, type Prefecture } from '@/scripts/Api';
 import { computed, readonly, ref, watch } from 'vue';
+
+const handleError = (e: ApiError) => {
+  window.alert(`エラーが発生しました: ${e.message}`);
+  throw e;
+};
 
 export const useComposition = () => {
   const api = new Api();
@@ -22,9 +27,14 @@ export const useComposition = () => {
     }
     if (loadingCompositions.value[prefCode] !== true) {
       loadingCompositions.value[prefCode] = true;
-      const composition = await api.getComposition(prefCode);
-      loadingCompositions.value[prefCode] = false;
-      return composition;
+
+      try {
+        return await api.getComposition(prefCode);
+      } catch (e) {
+        handleError(e as ApiError);
+      } finally {
+        loadingCompositions.value[prefCode] = false;
+      }
     }
   };
 
@@ -38,11 +48,15 @@ export const useComposition = () => {
       if (newValue.length > oldValue.length) {
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const prefCode = newValue.find((v) => !oldValue.includes(v))!;
-        const composition = await findComposition(prefCode);
-        if (composition !== undefined) {
-          compositions.value[prefCode] = composition;
+        try {
+          const composition = await findComposition(prefCode);
+          if (composition !== undefined) {
+            compositions.value[prefCode] = composition;
+          }
+          checkedArray.value.push(prefCode);
+        } catch (e) {
+          checked.value[prefCode] = false;
         }
-        checkedArray.value.push(prefCode);
       } else {
         const prefCode = oldValue.find((v) => !newValue.includes(v));
         checkedArray.value = checkedArray.value.filter((v) => v !== prefCode);
