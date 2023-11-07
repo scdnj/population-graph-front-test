@@ -25,7 +25,7 @@ https://note.yumemi.co.jp/n/ned7429b59556
 - [x] tailwindcss
 - [x] コンポーネントの jest でのテスト
 - [ ] playwright
-- [ ] CI
+- [x] CI
 - [ ] storybook の i11y 関連プラグイン(あったと思う。あった方がいいと思うけど今じゃない気がする)
 - [ ] VRT(グラフあるしあった方が良いかも？TDD でやったことはないし見た目も fix ではないので後でいいかも)
 
