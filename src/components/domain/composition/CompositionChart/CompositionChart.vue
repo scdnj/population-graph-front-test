@@ -9,6 +9,8 @@ const props = defineProps<{
   compositions: Array<{ prefName: string; composition: Composition }>;
 }>();
 
+const selectedCompositionType = ref<CompositionType>('総人口');
+
 const options = ref<Options & ChartOptions>({
   accessibility: {
     description: '都道府県別人口',
@@ -37,7 +39,7 @@ const options = ref<Options & ChartOptions>({
   },
   yAxis: {
     title: {
-      text: '人口数',
+      text: selectedCompositionType.value,
       align: 'high',
       rotation: 0,
       textAlign: 'right',
@@ -87,8 +89,6 @@ const options = ref<Options & ChartOptions>({
   },
 });
 
-const selectedCompositionType = ref<CompositionType>('総人口');
-
 const radioOptions: CompositionType[] = ['総人口', '年少人口', '生産年齢人口', '老年人口'];
 
 const series = computed(() => {
@@ -106,6 +106,11 @@ const series = computed(() => {
 });
 </script>
 <template>
-  <Chart :options="{ ...options, series }"></Chart>
-  <RadioGroup v-model="selectedCompositionType" :options="radioOptions" />
+  <div v-if="series.length">
+    <Chart :options="{ ...options, series }"></Chart>
+    <RadioGroup v-model="selectedCompositionType" :options="radioOptions" />
+  </div>
+  <div v-else class="w-full h-64 rounded bg-gray-400/50 text-lg flex justify-center items-center">
+    都道府県を選択してください
+  </div>
 </template>

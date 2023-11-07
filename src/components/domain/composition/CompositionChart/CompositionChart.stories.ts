@@ -119,3 +119,9 @@ export const Default: Story = {
     ],
   },
 };
+
+export const 未選択: Story = {
+  args: {
+    compositions: [],
+  },
+};
