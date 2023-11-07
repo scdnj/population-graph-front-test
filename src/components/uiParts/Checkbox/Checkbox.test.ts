@@ -14,12 +14,12 @@ describe('Checkbox', () => {
   });
   describe('modelValueがloadingの時', () => {
     test('要素の値はfalse', () => {
-      render(Default({ modelValue: 'loading' }));
+      render(Default({ modelValue: true, loading: true }));
       const buttonElement = screen.getByRole<HTMLInputElement>('checkbox');
       expect(buttonElement).not.toBeChecked();
     });
     test('disabledになっている', () => {
-      render(Default({ modelValue: 'loading' }));
+      render(Default({ modelValue: true, loading: true }));
       const checkbox = screen.getByRole<HTMLInputElement>('checkbox');
       expect(checkbox).toBeDisabled();
     });

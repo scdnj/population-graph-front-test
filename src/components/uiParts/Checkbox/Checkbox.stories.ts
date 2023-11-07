@@ -30,7 +30,7 @@ export const Labeled: Story = {
 
 export const Loading: Story = {
   args: {
-    modelValue: 'loading',
+    loading: true,
     label: 'ロード中',
   },
 };
