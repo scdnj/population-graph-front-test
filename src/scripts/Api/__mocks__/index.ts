@@ -6,11 +6,14 @@ export class Api implements ApiInterface {
       { prefCode: 1, prefName: '北海道' },
       { prefCode: 2, prefName: '青森県' },
       { prefCode: 3, prefName: '東京都' },
-      { prefCode: 4, prefName: 'けつばん' },
+      { prefCode: 4, prefName: 'load' },
     ];
   }
 
   async getComposition(prefCode: number): Promise<Composition> {
+    if (prefCode === 4) {
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+    }
     return {
       総人口: [{ value: 50 * prefCode, year: 1960 }],
       年少人口: [{ value: 10 * prefCode, year: 1960 }],

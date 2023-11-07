@@ -1,7 +1,6 @@
 import { within } from '@storybook/testing-library';
 import PrefecturesCompositionViewer from './PrefecturesCompositionViewer.vue';
 import type { Meta, StoryObj } from '@storybook/vue3';
-import { wait } from '@/scripts/util/wait';
 
 type Story = StoryObj<typeof PrefecturesCompositionViewer>;
 type M = Meta<typeof PrefecturesCompositionViewer>;
@@ -21,6 +20,6 @@ export const 選択済み: Story = {
     (await canvas.findByLabelText('北海道')).click();
     (await canvas.findByLabelText('東京都')).click();
     // 画面が更新されるまで待つ
-    await wait(100);
+    await jest.advanceTimersByTimeAsync(100);
   },
 };
