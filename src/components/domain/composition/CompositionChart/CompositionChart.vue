@@ -11,7 +11,7 @@ const props = defineProps<{
 
 const selectedCompositionType = ref<CompositionType>('総人口');
 
-const options = ref<Options & ChartOptions>({
+const options = computed<Options & ChartOptions>(() => ({
   accessibility: {
     description: '都道府県別人口',
     point: {
@@ -87,7 +87,7 @@ const options = ref<Options & ChartOptions>({
     align: 'right',
     verticalAlign: 'top',
   },
-});
+}));
 
 const radioOptions: CompositionType[] = ['総人口', '年少人口', '生産年齢人口', '老年人口'];
 
