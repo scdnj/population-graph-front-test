@@ -11,11 +11,15 @@ const vModel = computed({
 });
 </script>
 <template>
-  <label :aria-checked="modelValue === true" class="flex items-center text-sm space-x-2">
+  <label
+    :aria-checked="modelValue === true"
+    class="flex items-center text-sm space-x-2 cursor-pointer"
+  >
     <input
       v-model="vModel"
       type="checkbox"
       :disabled="loading"
+      class="cursor-pointer"
       :class="loading && 'opacity-0 w-0 h-0'"
     />
     <div v-if="loading" class="w-4 h-4 rounded-full bg-gray-500 animate-pulse"></div>
