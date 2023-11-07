@@ -9,6 +9,8 @@ const props = defineProps<{
   compositions: Array<{ prefName: string; composition: Composition }>;
 }>();
 
+const selectedCompositionType = ref<CompositionType>('総人口');
+
 const options = ref<Options & ChartOptions>({
   accessibility: {
     description: '都道府県別人口',
@@ -37,7 +39,7 @@ const options = ref<Options & ChartOptions>({
   },
   yAxis: {
     title: {
-      text: '人口数',
+      text: selectedCompositionType.value,
       align: 'high',
       rotation: 0,
       textAlign: 'right',
@@ -86,8 +88,6 @@ const options = ref<Options & ChartOptions>({
     verticalAlign: 'top',
   },
 });
-
-const selectedCompositionType = ref<CompositionType>('総人口');
 
 const radioOptions: CompositionType[] = ['総人口', '年少人口', '生産年齢人口', '老年人口'];
 
