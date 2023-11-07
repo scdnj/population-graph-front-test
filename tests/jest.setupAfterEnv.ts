@@ -6,6 +6,10 @@ jest.mock('@/scripts/Api/getApiKey', () => {
   };
 });
 
+jest.mock('@/scripts/Api/getBasePath', () => {
+  return { getBasePath: () => '' };
+});
+
 jest.mock('@/isStorybook', () => {
   return {
     isStorybook: () => false,
