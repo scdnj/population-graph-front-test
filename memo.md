@@ -1,7 +1,7 @@
 ## 現状
 
 ## この feature でやること
-CIを入れる
+CIを入れる。githubでCIを入れるのが久しぶりでよく覚えていなかったのでchatGPTに聞いた。pnpmをnpmからinstallしてるところだけ気になったので調べてみたらpnpm/actions-setupってのがあるらしかったのでそれを使った。
 
 ### グラフ課題
 - boundaryYear もわかるようにしたい。
