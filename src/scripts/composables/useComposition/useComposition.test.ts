@@ -7,6 +7,7 @@ let compositionSpy: jest.SpyInstance;
 
 beforeEach(() => {
   jest.clearAllMocks();
+  jest.spyOn(window, 'alert').mockImplementation(() => {});
   jest.spyOn(Api.prototype, 'getPrefectures').mockResolvedValue([
     { prefCode: 15, prefName: '都道府県' },
     { prefCode: 151, prefName: 'aaaaa' },

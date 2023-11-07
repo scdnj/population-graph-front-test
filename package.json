@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@testing-library/user-event": "^14.5.1",
+    "@vercel/edge": "^1.1.0",
     "axios": "^1.6.0",
     "highcharts": "^11.2.0",
     "highcharts-vue": "^1.4.3",

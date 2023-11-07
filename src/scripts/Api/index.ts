@@ -2,6 +2,7 @@ import axios from 'axios';
 import { getApiKey } from '@/scripts/Api/getApiKey';
 import { isStorybook } from '@/isStorybook';
 import { Api as ApiMock } from './__mocks__';
+import { getBasePath } from './getBasePath';
 
 type ApiReturn<T> = {
   message: null;
@@ -97,8 +98,8 @@ function catchError<T>(e: T | ApiErrorResponses): asserts e is T {
 
 class ApiImpl implements ApiInterface {
   private readonly axios = axios.create({
-    headers: { 'X-API-KEY': key },
-    baseURL: 'https://opendata.resas-portal.go.jp/api/v1/',
+    headers: key !== undefined ? { 'X-API-KEY': key } : {},
+    baseURL: getBasePath(),
   });
 
   /**
