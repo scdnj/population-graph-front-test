@@ -5,7 +5,21 @@
     "module": "ESNext",
     "moduleResolution": "bundler",
     "allowSyntheticDefaultImports": true,
-    "strict": true
+    "strict": true,
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ],
+      "tests/*": [
+        "./tests/*"
+      ]
+    }
   },
-  "include": ["vite.config.ts", "tests/**/*.ts"]
+  "include": [
+    "vite.config.ts",
+    "tests/**/*.ts",
+    "src/**/*.test.ts",
+    "src/**/*.stories.ts",
+    "src/**/*.spec.ts"
+  ],
 }

@@ -107,6 +107,7 @@ const series = computed(() => {
 </script>
 <template>
   <div v-if="series.length">
+    <div>{{ series.map((d) => d.name) }}</div>
     <Chart :options="{ ...options, series }"></Chart>
     <RadioGroup v-model="selectedCompositionType" :options="radioOptions" />
   </div>

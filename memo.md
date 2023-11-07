@@ -1,22 +1,19 @@
 ## 現状
 
 ## この feature でやること
-- [x] グラフのY軸の名前を返る
-- [x] グラフが無い時に「ここに表示される」的なメッセージを表示する
+- [x] jest.advanceTimersByTimeAsyncを修正
 
 ### グラフ課題
-- [ ] legendの順序が変わらないようにする
+
 - [ ] boundaryYear もわかるようにしたい。
   - このグラフは信頼性が薄い。
   - 途中から折れ線を Dash に返る方法があったのでそれを使ったりして表示したい。
 
 ## メモ
-prettier-tailwindのプラグイン入れても動かない。
-- [x] チェックボックスのcursor:pointer
 
-## やれたら嬉しい
-- [ ] チェックボックスをホバーしたらグラフ連動してほしい
+prettier-tailwind のプラグイン入れても動かない。
 
+- [x] チェックボックスの cursor:pointer
 
 ## TODO タスク
 
