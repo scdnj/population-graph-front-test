@@ -10,26 +10,42 @@ export const useComposition = () => {
 
   const loadingCompositions = ref<{ [prefCode: number]: boolean }>({});
 
-  const checkedArray = computed(() => {
-    return Object.entries(checked.value)
-      .filter(([, v]) => v)
-      .map(([k]) => +k);
-  });
+  const checkedArray = ref<number[]>([]);
+
+  /**
+   * 人口データを取得する。既に取得している場合は既に取得している値を、取得していない場合はAPIから取得する。
+   * ただし、API取得中(短時間に二度叩かれる等)の場合はundefinedを返す。
+   */
+  const findComposition = async (prefCode: number) => {
+    if (compositions.value[prefCode] !== undefined) {
+      return compositions.value[prefCode];
+    }
+    if (loadingCompositions.value[prefCode] !== true) {
+      loadingCompositions.value[prefCode] = true;
+      const composition = await api.getComposition(prefCode);
+      loadingCompositions.value[prefCode] = false;
+      return composition;
+    }
+  };
 
   watch(
-    checkedArray,
-    (checkedArray) => {
-      for (const prefCode of checkedArray) {
-        if (
-          compositions.value[prefCode] === undefined &&
-          loadingCompositions.value[prefCode] !== true
-        ) {
-          loadingCompositions.value[prefCode] = true;
-          void api.getComposition(prefCode).then((composition) => {
-            compositions.value[prefCode] = composition;
-            loadingCompositions.value[prefCode] = false;
-          });
+    () =>
+      // チェックがtrueのprefCodeの配列
+      Object.entries(checked.value)
+        .filter(([, v]) => v)
+        .map(([k]) => +k),
+    async (newValue, oldValue) => {
+      if (newValue.length > oldValue.length) {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        const prefCode = newValue.find((v) => !oldValue.includes(v))!;
+        const composition = await findComposition(prefCode);
+        if (composition !== undefined) {
+          compositions.value[prefCode] = composition;
         }
+        checkedArray.value.push(prefCode);
+      } else {
+        const prefCode = oldValue.find((v) => !newValue.includes(v));
+        checkedArray.value = checkedArray.value.filter((v) => v !== prefCode);
       }
     },
     { deep: true },

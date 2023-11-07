@@ -146,3 +146,35 @@ it('応答が返るとtrueになる', async () => {
   await jest.advanceTimersByTimeAsync(1);
   expect(hook.loadingCompositions.value[prefCode]).toEqual(false);
 });
+
+describe('チェックした順番通りにcompositionが並ぶ', () => {
+  beforeEach(() => {
+    jest.spyOn(Api.prototype, 'getPrefectures').mockResolvedValueOnce([
+      { prefCode: 1, prefName: '1' },
+      { prefCode: 2, prefName: '2' },
+      { prefCode: 3, prefName: '3' },
+      { prefCode: 4, prefName: '4' },
+    ]);
+  });
+  test('昇順', async () => {
+    const hook = useComposition();
+    await hook.fetchPrefectures();
+    for (const prefCode of [1, 2, 3, 4]) {
+      hook.checkedPrefectures.value[prefCode] = true;
+      await jest.advanceTimersByTimeAsync(1);
+    }
+    await jest.advanceTimersByTimeAsync(1);
+    expect(hook.compositions.value.map((d) => d.prefName)).toEqual(['1', '2', '3', '4']);
+  });
+  test('降順', async () => {
+    jest.useFakeTimers();
+    const hook = useComposition();
+    await hook.fetchPrefectures();
+    for (const prefCode of [4, 3, 2, 1]) {
+      hook.checkedPrefectures.value[prefCode] = true;
+      await jest.advanceTimersByTimeAsync(1);
+    }
+    await jest.advanceTimersByTimeAsync(1);
+    expect(hook.compositions.value.map((d) => d.prefName)).toEqual(['4', '3', '2', '1']);
+  });
+});
