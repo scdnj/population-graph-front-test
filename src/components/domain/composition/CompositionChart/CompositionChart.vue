@@ -106,6 +106,11 @@ const series = computed(() => {
 });
 </script>
 <template>
-  <Chart :options="{ ...options, series }"></Chart>
-  <RadioGroup v-model="selectedCompositionType" :options="radioOptions" />
+  <div v-if="series.length">
+    <Chart :options="{ ...options, series }"></Chart>
+    <RadioGroup v-model="selectedCompositionType" :options="radioOptions" />
+  </div>
+  <div v-else class="w-full h-64 rounded bg-gray-400/50 text-lg flex justify-center items-center">
+    都道府県を選択してください
+  </div>
 </template>
