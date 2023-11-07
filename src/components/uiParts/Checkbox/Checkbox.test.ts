@@ -12,6 +12,18 @@ describe('Checkbox', () => {
       expect(buttonElement.checked).toBe(modelValue);
     });
   });
+  describe('modelValueがloadingの時', () => {
+    test('要素の値はfalse', () => {
+      render(Default({ modelValue: true, loading: true }));
+      const buttonElement = screen.getByRole<HTMLInputElement>('checkbox');
+      expect(buttonElement).not.toBeChecked();
+    });
+    test('disabledになっている', () => {
+      render(Default({ modelValue: true, loading: true }));
+      const checkbox = screen.getByRole<HTMLInputElement>('checkbox');
+      expect(checkbox).toBeDisabled();
+    });
+  });
 
   test('クリックでmodelValueをupdateするemitが発火する', () => {
     const spyFn = jest.fn();

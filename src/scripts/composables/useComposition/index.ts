@@ -1,5 +1,5 @@
 import { Api, type Composition, type Prefecture } from '@/scripts/Api';
-import { computed, ref, watch } from 'vue';
+import { computed, readonly, ref, watch } from 'vue';
 
 export const useComposition = () => {
   const api = new Api();
@@ -8,26 +8,32 @@ export const useComposition = () => {
 
   const checked = ref<{ [prefCode: number]: boolean }>({});
 
-  watch(
-    checked,
-    () => {
-      const noCompositionPrefCodes = checkedArray.value.filter(
-        (prefCode) => compositions.value[prefCode] === undefined,
-      );
-      noCompositionPrefCodes.forEach((prefCode) => {
-        void api.getComposition(prefCode).then((composition) => {
-          compositions.value[prefCode] = composition;
-        });
-      });
-    },
-    { deep: true },
-  );
+  const loadingCompositions = ref<{ [prefCode: number]: boolean }>({});
 
   const checkedArray = computed(() => {
     return Object.entries(checked.value)
       .filter(([, v]) => v)
       .map(([k]) => +k);
   });
+
+  watch(
+    checkedArray,
+    (checkedArray) => {
+      for (const prefCode of checkedArray) {
+        if (
+          compositions.value[prefCode] === undefined &&
+          loadingCompositions.value[prefCode] !== true
+        ) {
+          loadingCompositions.value[prefCode] = true;
+          void api.getComposition(prefCode).then((composition) => {
+            compositions.value[prefCode] = composition;
+            loadingCompositions.value[prefCode] = false;
+          });
+        }
+      }
+    },
+    { deep: true },
+  );
 
   const compositions = ref<{ [prefCode: number]: Composition }>({});
 
@@ -54,7 +60,8 @@ export const useComposition = () => {
       prefectures.value = await api.getPrefectures();
     },
     compositions: compositionAndNames,
-    prefectures,
+    prefectures: readonly(prefectures),
     checkedPrefectures: checked,
+    loadingCompositions,
   };
 };
