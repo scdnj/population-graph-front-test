@@ -92,6 +92,6 @@ export const useComposition = () => {
     compositions: compositionAndNames,
     prefectures: readonly(prefectures),
     checkedPrefectures: checked,
-    loadingCompositions,
+    loadingCompositions: readonly(loadingCompositions),
   };
 };

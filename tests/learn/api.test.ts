@@ -6,7 +6,7 @@ async function wait(ms: number) {
 }
 
 const headers = {
-  'X-API-KEY': config({ path: '.env.local' }).parsed?.API_KEY,
+  'X-API-KEY': config({ path: '.env.local' }).parsed?.VITE_APP_API_KEY,
 };
 beforeEach(async () => {
   // 一秒間の平均リクエスト回数は5回なので、200ms待つ

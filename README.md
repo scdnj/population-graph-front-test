@@ -7,6 +7,19 @@ https://notion.yumemi.co.jp/%E6%8E%A1%E7%94%A8%E9%96%A2%E9%80%A3%E8%B3%87%E6%96%
 【課題】
 都道府県別の総人口推移グラフを表示する SPA(Single Page Application)を構築せよ
 
+## 開発方法
+```
+cp .env.template .env.local
+```
+RESAS API KEYを取得して.env.localのVITE_APP_API_KEYに入力
+
+```
+pnpm install
+pnpm dev
+```
+
+本番環境ではvercelのmiddlewareからAPIを叩いています。
+
 ## 確認しているポイント
 
 https://note.yumemi.co.jp/n/ned7429b59556
