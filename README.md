@@ -1,4 +1,4 @@
-# ゆめみフロントエンド試験提出コード
+# フロントエンドコーディング試験
 
 ## 要件
 
@@ -20,7 +20,7 @@ pnpm dev
 
 ## 確認しているポイント
 
-https://note.yumemi.co.jp/n/ned7429b59556
+https://yumemi.notion.site/yumemi/0e9ef27b55704d7882aab55cc86c999d
 
 ## 開発時に入れたいものチェックリスト
 
